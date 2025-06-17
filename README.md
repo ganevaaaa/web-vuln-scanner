@@ -1,7 +1,7 @@
 # 🔍 Web Vulnerability Scanner 
 
 A lightweight Python-based tool that crawls websites and detects common web vulnerabilities such as **SQL Injection (SQLi)**, **Cross-Site Scripting (XSS)**, and more.
-
+📌 “This project is for educational use. It demonstrates how basic web vulnerability scanning works and is not meant to replace professional tools like Burp Suite or OWASP ZAP.”
 > ⚠️ For **educational and authorized use only**. Never scan targets you don't have permission to test.
 
 ---
