@@ -16,7 +16,21 @@ MAX_PAGES = 50
 
 
 class WebCrawler:
+    """
+       A web crawler that:
+         - Begins at a start URL
+         - Follows internal <a href="..."> links in BFS order
+         - Respects robots.txt rules
+         - Identifies itself via a custom User-Agent
+         - Pauses between requests to avoid overloading servers
+         - Stops after visiting MAX_PAGES pages
+     """
     def __init__(self, start_url):
+        """
+            Initialize the crawler.
+            Args:
+            start_url: The first URL to begin crawling from.
+        """
         self.start_url = start_url
         self.visited = set()
         self.queue = deque([start_url])
@@ -33,11 +47,31 @@ class WebCrawler:
         # ——————————————
 
     def start_crawl(self):
+        """
+        Clear any previous state and begin crawling from the start_url.
+        """
         self.visited.clear()
         self.crawl(self.start_url)
 
 
     def crawl(self, url):
+        """
+          Perform a BFS crawl starting from the given URL.
+
+          Args:
+             url: The URL at which to start (or restart) the crawl.
+
+          Behavior:
+           - Resets the queue to begin at `url`
+           - Marks `url` as visited
+           - Loops until queue is empty or MAX_PAGES reached
+           - For each URL:
+            * Checks robots.txt via self.rp.can_fetch()
+            * Sleeps SLEEP_TIME seconds
+            * Sends GET with custom User-Agent
+            * Parses HTML for links
+            * Enqueues unseen links
+        """
         self.queue = deque([url])
         self.visited.add(url)
 
@@ -68,6 +102,16 @@ class WebCrawler:
     # reconstruct it using the base url
 
     def extract_links(self,soup, base_url):
+        """
+        Extract and normalize all internal <a href="..."> links from a parsed page.
+
+        Args:
+            soup: BeautifulSoup object of the page HTML.
+            base_url: The URL used to resolve relative links.
+
+        Returns:
+            A list of fully-qualified URLs on the same domain as base_url.
+        """
         links = []
         for tag in soup.find_all('a'):
             href = tag.get("href")
@@ -82,6 +126,13 @@ class WebCrawler:
         return links
 
     def is_visited(self,links):
+        """
+        Add unseen links to the visited set and the crawl queue.
+
+        Args:
+
+        links: A list of URLs extracted from the current page.
+        """
         for link in links:
             if link not in self.visited:
                 self.visited.add(link)
