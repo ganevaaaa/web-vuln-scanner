@@ -1,13 +1,9 @@
-"""
-    # TODO fix for users
-
-    start_url = "http://testphp.vulnweb.com"
-"""
 import requests
 from bs4 import BeautifulSoup
 from collections import deque
-from urllib.parse import urljoin, urlparse
+from urllib.parse import  urlparse
 from urllib.robotparser import RobotFileParser
+from parser import extract_links, extract_forms
 import time
 
 SLEEP_TIME = 1
@@ -34,6 +30,8 @@ class WebCrawler:
         self.start_url = start_url
         self.visited = set()
         self.queue = deque([start_url])
+        self.page_forms = []
+
 
         # ——————————————
         # robots.txt support
@@ -89,41 +87,19 @@ class WebCrawler:
 
                 html = response.text
                 soup = BeautifulSoup(html, "html.parser")
-                links = self.extract_links(soup, current_url)
+                links = extract_links(soup, current_url)
                 self.is_visited(links)
+                forms = extract_forms(soup, current_url)
+                if forms:
+                    self.page_forms.append({
+                        "page_url": current_url,
+                        "forms": forms
+                    })
             except requests.RequestException as e:
                 print(f"Failed to fetch {current_url}: {e}")
                 continue
 
-    # Because raw HTML is just one big string->use BeautifulSoup
 
-    # soup gives you the tag, but base_url gives you the full path when needed.
-    # The browser would know to open the website as rel path , but we need the whole path , thus we
-    # reconstruct it using the base url
-
-    def extract_links(self,soup, base_url):
-        """
-        Extract and normalize all internal <a href="..."> links from a parsed page.
-
-        Args:
-            soup: BeautifulSoup object of the page HTML.
-            base_url: The URL used to resolve relative links.
-
-        Returns:
-            A list of fully-qualified URLs on the same domain as base_url.
-        """
-        links = []
-        for tag in soup.find_all('a'):
-            href = tag.get("href")
-            if href:
-                # Convert relative URL to full URL
-                full_url = urljoin(base_url, href)
-
-                # Keep only internal links (same domain)
-                if urlparse(full_url).netloc == urlparse(base_url).netloc:
-                    links.append(full_url)
-
-        return links
 
     def is_visited(self,links):
         """
@@ -138,5 +114,24 @@ class WebCrawler:
                 self.visited.add(link)
                 self.queue.append(link)
 
-        return None
+from pprint import pprint
 
+if __name__ == "__main__":
+    # 1) Instantiate and run the crawler
+    start = "http://testphp.vulnweb.com"
+    crawler = WebCrawler(start)
+    crawler.start_crawl()
+
+    # 2) Print out all visited URLs
+    print("\n=== Visited URLs ===")
+    for url in crawler.visited:
+        print(url)
+
+    # 3) Print out all collected forms
+    print("\n=== Forms Found ===")
+    for page in crawler.page_forms:
+        print(f"\nPage: {page['page_url']}")
+        for form in page["forms"]:
+            print("  Action:", form["action_url"])
+            print("   Method:", form["method"])
+            print("   Inputs:", form["inputs"])

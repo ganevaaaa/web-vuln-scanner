@@ -14,11 +14,11 @@ A lightweight Python-based tool that crawls websites and detects common web vuln
 
 
 ## 🚀 Features
-- 🌐 Website crawler using **Breadth-First Search (BFS)**
+- Website crawler using **Breadth-First Search (BFS)**
+- Form detection
 
 
 🚧 In development:
-- Form detection
 - Payload injection (XSS, SQLi)
 - JSON report generation
 - Command Injection detection
