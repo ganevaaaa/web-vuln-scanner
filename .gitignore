@@ -192,3 +192,17 @@ cython_debug/
 #  refer to https://docs.cursor.com/context/ignore-files
 .cursorignore
 .cursorindexingignore
+
+
+
+# PyCharm / IntelliJ
+.idea/
+*.iml
+misc.xml
+modules.xml
+vcs.xml
+
+
+# Python cache
+__pycache__/
+*.py[cod]
