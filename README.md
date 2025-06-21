@@ -17,7 +17,7 @@ A lightweight Python-based tool that crawls websites and detects common web vuln
 - 🌐 Website crawler using **Breadth-First Search (BFS)**
 
 
-🚧 In development:Add commentMore actions
+🚧 In development:
 - Form detection
 - Payload injection (XSS, SQLi)
 - JSON report generation
