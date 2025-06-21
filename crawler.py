@@ -7,6 +7,10 @@ import requests
 from bs4 import BeautifulSoup
 from collections import deque
 from urllib.parse import urljoin, urlparse
+from urllib.robotparser import RobotFileParser
+import time
+
+SLEEP_TIME = 1
 
 MAX_PAGES = 50
 
@@ -16,6 +20,17 @@ class WebCrawler:
         self.start_url = start_url
         self.visited = set()
         self.queue = deque([start_url])
+
+        # ——————————————
+        # robots.txt support
+        #Website owners list which parts of the site they don’t want crawled-voluntary
+        # convention to be a “good citizen” on the web :)
+        domain = "{uri.scheme}://{uri.netloc}".format(uri=urlparse(start_url))
+        self.rp = RobotFileParser()
+        self.rp.set_url(domain + "/robots.txt")
+        self.rp.read()
+        self.user_agent = "MyCrawler/1.0"  # can be anything you choose
+        # ——————————————
 
     def start_crawl(self):
         self.visited.clear()
@@ -29,9 +44,15 @@ class WebCrawler:
         while self.queue and len(self.visited) < MAX_PAGES:
             current_url = self.queue.popleft()
             print(f"Visiting: {current_url}")
-
+            # robots.txt check
+            if not self.rp.can_fetch(self.user_agent, current_url):
+                print("Skipped by robots.txt")
+                continue
+            time.sleep(SLEEP_TIME)
             try:
-                response = requests.get(current_url)
+                # fetch with custom User-Agent
+                response = requests.get(current_url,headers={"User-Agent": self.user_agent})
+
                 html = response.text
                 soup = BeautifulSoup(html, "html.parser")
                 links = self.extract_links(soup, current_url)
