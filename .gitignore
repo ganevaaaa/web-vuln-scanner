@@ -206,3 +206,5 @@ vcs.xml
 # Python cache
 __pycache__/
 *.py[cod]
+
+test.py

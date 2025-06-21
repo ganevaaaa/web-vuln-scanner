@@ -114,24 +114,4 @@ class WebCrawler:
                 self.visited.add(link)
                 self.queue.append(link)
 
-from pprint import pprint
 
-if __name__ == "__main__":
-    # 1) Instantiate and run the crawler
-    start = "http://testphp.vulnweb.com"
-    crawler = WebCrawler(start)
-    crawler.start_crawl()
-
-    # 2) Print out all visited URLs
-    print("\n=== Visited URLs ===")
-    for url in crawler.visited:
-        print(url)
-
-    # 3) Print out all collected forms
-    print("\n=== Forms Found ===")
-    for page in crawler.page_forms:
-        print(f"\nPage: {page['page_url']}")
-        for form in page["forms"]:
-            print("  Action:", form["action_url"])
-            print("   Method:", form["method"])
-            print("   Inputs:", form["inputs"])
