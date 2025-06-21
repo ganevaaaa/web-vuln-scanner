@@ -6,22 +6,22 @@ A lightweight Python-based tool that crawls websites and detects common web vuln
 
 
 ---
+## 📌 Project Status
 
-## 🚀 Features
+This project is a work in progress.
 
-- 🌐 Website crawler (follow internal links)
-- 🧾 Form and input detection
-- 🧪 Injection of test payloads (XSS, SQLi)
-- 🔎 Response analysis for reflected input or errors
-- 📝 JSON vulnerability report generation
+✅ Core features implemented:
+- Website crawling
 
-Planned:
-- [ ] Command Injection detection
-- [ ] GET & POST form support
-- [ ] CLI arguments for custom scans
-- [ ] HTML report output
 
----
+🚧 In development:
+- Form detection
+- Payload injection (XSS, SQLi)
+- JSON report generation
+- Command Injection detection
+- GET & POST form support
+- CLI arguments
+- HTML report output
 
 ## 🧠 How It Works
 
