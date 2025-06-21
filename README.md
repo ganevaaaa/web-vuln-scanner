@@ -11,7 +11,8 @@ A lightweight Python-based tool that crawls websites and detects common web vuln
 This project is a work in progress.
 
 ✅ Core features implemented:
-- Website crawling
+- 🌐 Website crawler using **Breadth-First Search (BFS)**
+
 
 
 🚧 In development:
