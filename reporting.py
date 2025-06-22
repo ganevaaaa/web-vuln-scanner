@@ -1,12 +1,7 @@
-
 import json
-
 # Global list to store findings
 findings = []
-
 # reporting.py
-
-import json
 
 findings = []
 
