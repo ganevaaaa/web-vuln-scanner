@@ -49,7 +49,17 @@ A lightweight Python-based tool that crawls websites and detects common web vuln
 ## 📦 Project Structure
 
 ## 🛠 Requirements
+To install the required Python dependencies, run:
+```bash
+ pip install -r requirements.txt
+```
+requests – for making HTTP requests
 
+beautifulsoup4 – for parsing HTML content
+
+pytest – for running unit tests
+
+---
 🔐 Ethical Disclaimer
 ⚠️ For **educational and authorized use only**. Never scan targets you don't have permission to test.
 ---
