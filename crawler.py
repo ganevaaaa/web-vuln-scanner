@@ -8,7 +8,6 @@ import time
 
 SLEEP_TIME = 1
 
-MAX_PAGES = 50
 
 
 class WebCrawler:
@@ -52,7 +51,7 @@ class WebCrawler:
         self.crawl(self.start_url)
 
 
-    def crawl(self, url):
+    def crawl(self, url,max_images):
         """
           Perform a BFS crawl starting from the given URL.
 
@@ -70,10 +69,14 @@ class WebCrawler:
             * Parses HTML for links
             * Enqueues unseen links
         """
+        if "vulnweb.com" not in url:
+            input("⚠️ WARNING: This scanner should only be used on allowed targets.\nPress ENTER to confirm you have permission.")
+
         self.queue = deque([url])
         self.visited.add(url)
 
-        while self.queue and len(self.visited) < MAX_PAGES:
+
+        while self.queue and len(self.visited) < max_images:
             current_url = self.queue.popleft()
             print(f"Visiting: {current_url}")
             # robots.txt check

@@ -14,17 +14,25 @@ A lightweight Python-based tool that crawls websites and detects common web vuln
 
 
 ## 🚀 Features
-- Website crawler using **Breadth-First Search (BFS)**
-- Form detection
+- Website crawler using Breadth-First Search (BFS)
 
+- Form detection & parsing (action, method, inputs)
+
+- XSS & SQLi payload injection (GET & POST)
+
+- Reflection & error-based response analysis
+
+- JSON report generation
 
 🚧 In development:
-- Payload injection (XSS, SQLi)
-- JSON report generation
+
 - Command Injection detection
-- GET & POST form support
-- CLI arguments
+
 - HTML report output
+
+- CLI argument parsing
+
+- Duplicate finding deduplication / report cleanup
 
 ---
 
