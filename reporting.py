@@ -1,15 +1,6 @@
-
 import json
-
 # Global list to store findings
 findings = []
-
-# reporting.py
-
-import json
-
-findings = []
-
 def record_finding(page_url, action_url, field, payload, vuln_type, evidence):
     new_finding = {
         "page": page_url,
