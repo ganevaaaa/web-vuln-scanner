@@ -70,7 +70,7 @@ python main.py --url http://testphp.vulnweb.com --max-pages 20 --i-understand
 | Argument         | Description                                     |
 | ---------------- | ----------------------------------------------- |
 | `--url`          | **(required)** The starting URL to scan         |
-| `--max-pages`    | Maximum number of pages to crawl (default: 30)  |
+| `--max-pages`    | Maximum number of pages to crawl   |
 | `--i-understand` | Confirms you have permission for non-demo sites |
 
 
