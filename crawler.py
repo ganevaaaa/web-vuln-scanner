@@ -53,7 +53,7 @@ class WebCrawler:
         self.visited.clear()
         self.crawl(self.start_url)
 
-    def crawl(self, url: str, max_images: int, confirm: bool = False) -> None:
+    def crawl(self, url: str, max_pages: int, confirm: bool = False) -> None:
         """
           Perform a BFS crawl starting from the given URL.
 
@@ -79,7 +79,6 @@ class WebCrawler:
             )
 
         self.queue = deque([url])
-        self.visited.add(url)
 
 
         while self.queue and len(self.visited) < max_images:
@@ -93,6 +92,7 @@ class WebCrawler:
             try:
                 # fetch with custom User-Agent
                 response = requests.get(current_url,headers={"User-Agent": self.user_agent})
+                self.visited.add(url)
 
                 html = response.text
                 soup = BeautifulSoup(html, "html.parser")
@@ -120,7 +120,7 @@ class WebCrawler:
         """
         for link in links:
             if link not in self.visited:
-                self.visited.add(link)
+                #self.visited.add(link)
                 self.queue.append(link)
 
 
