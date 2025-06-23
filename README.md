@@ -37,7 +37,15 @@ A lightweight Python-based tool that crawls websites and detects common web vuln
 - Colorized CLI Output
 - Scan Summary
 - Authenticated Scanning
-- Custom Headers/Cookies
+- Command Injection
+
+- File Inclusion
+
+- Open Redirect
+
+- Missing Security Headers
+
+- Insecure Cookies
 
 ---
 
