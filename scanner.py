@@ -4,9 +4,9 @@ from crawler import WebCrawler
 from reporting import record_finding,write_report_json
 
 
-def run_scanner(start_url,max_pages):
+def run_scanner(start_url,max_pages,confirm=False):
     crawler = WebCrawler(start_url)
-    crawler.crawl(start_url,max_pages)
+    crawler.crawl(start_url,max_pages, confirm=confirm)
 
     for page in crawler.page_forms:
         forms = page["forms"]

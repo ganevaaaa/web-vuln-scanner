@@ -23,14 +23,14 @@ A lightweight Python-based tool that crawls websites and detects common web vuln
 - Reflection & error-based response analysis
 
 - JSON report generation
+- CLI argument parsing
+
 
 🚧 In development:
 
 - Command Injection detection
 
 - HTML report output
-
-- CLI argument parsing
 
 - Duplicate finding deduplication / report cleanup
 
@@ -58,6 +58,21 @@ requests – for making HTTP requests
 beautifulsoup4 – for parsing HTML content
 
 pytest – for running unit tests
+
+---
+### 🔧 Example Usage
+
+```bash
+python main.py --url http://testphp.vulnweb.com --max-pages 20 --i-understand
+```
+
+## ⚙️ CLI Arguments
+| Argument         | Description                                     |
+| ---------------- | ----------------------------------------------- |
+| `--url`          | **(required)** The starting URL to scan         |
+| `--max-pages`    | Maximum number of pages to crawl (default: 30)  |
+| `--i-understand` | Confirms you have permission for non-demo sites |
+
 
 ---
 🔐 Ethical Disclaimer
