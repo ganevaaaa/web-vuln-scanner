@@ -1,7 +1,9 @@
+from colorama import Fore, Style, init
 
 import argparse
 import logging
 from scanner import run_scanner
+init(autoreset=True)
 
 def main():
     logging.basicConfig(level=logging.INFO, format="%(message)s")
@@ -17,8 +19,9 @@ def main():
     args = parser.parse_args()
 
     # Block unauthorized scans
+    #TODO add more vuln sites
     if "vulnweb.com" not in args.url and not args.i_understand:
-        print("You must pass the --i-understand flag to scan non-demo targets.")
+        print(f"{Fore.RED} You must pass the --i-understand flag to scan non-demo targets.{Style.RESET_ALL}")
         return
 
     run_scanner(args.url, args.max_pages, confirm=args.i_understand)

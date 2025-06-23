@@ -2,6 +2,7 @@ import json
 import requests
 from crawler import WebCrawler
 from reporting import record_finding,write_report_json
+import logging
 
 
 def run_scanner(start_url,max_pages,confirm=False):
@@ -32,7 +33,7 @@ def inject_form(form, payload):
     results = []
 
     for field in input_fields:
-        data = {name: payload for name in input_fields}
+        data = {name: (payload if name == field else '') for name in input_fields}
 
         try:
             if method == "post":
