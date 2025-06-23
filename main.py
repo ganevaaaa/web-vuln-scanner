@@ -18,7 +18,7 @@ def main():
 
     # Block unauthorized scans
     if "vulnweb.com" not in args.url and not args.i_understand:
-        print("❌ You must pass the --i-understand flag to scan non-demo targets.")
+        print("You must pass the --i-understand flag to scan non-demo targets.")
         return
 
     run_scanner(args.url, args.max_pages, confirm=args.i_understand)
