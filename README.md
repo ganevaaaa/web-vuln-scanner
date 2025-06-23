@@ -32,9 +32,8 @@ A lightweight Python-based tool that crawls websites and detects common web vuln
 
 - HTML report output
 
-- Duplicate finding deduplication / report cleanup
 - HTML Report Generation
-- Colorized CLI Output
+
 - Scan Summary
 - Authenticated Scanning
 - Command Injection
