@@ -6,6 +6,9 @@ from urllib.robotparser import RobotFileParser
 from parser import extract_links, extract_forms
 import time
 
+import logging
+
+logging.basicConfig(level=logging.INFO)
 SLEEP_TIME = 1
 
 
@@ -50,8 +53,7 @@ class WebCrawler:
         self.visited.clear()
         self.crawl(self.start_url)
 
-
-    def crawl(self, url,max_images):
+    def crawl(self, url: str, max_images: int, confirm: bool = False) -> None:
         """
           Perform a BFS crawl starting from the given URL.
 
@@ -69,8 +71,12 @@ class WebCrawler:
             * Parses HTML for links
             * Enqueues unseen links
         """
-        if "vulnweb.com" not in url:
-            input("⚠️ WARNING: This scanner should only be used on allowed targets.\nPress ENTER to confirm you have permission.")
+
+        if "vulnweb.com" not in url and not confirm:
+            raise PermissionError(
+                "⚠️ This scanner must only be used on targets you have permission to test.\n"
+                "Use a legal demo site or pass `confirm=True` if you're sure."
+            )
 
         self.queue = deque([url])
         self.visited.add(url)
@@ -78,10 +84,10 @@ class WebCrawler:
 
         while self.queue and len(self.visited) < max_images:
             current_url = self.queue.popleft()
-            print(f"Visiting: {current_url}")
+            logging.info(f"Visiting: {current_url}")
             # robots.txt check
             if not self.rp.can_fetch(self.user_agent, current_url):
-                print("Skipped by robots.txt")
+                logging.warning(f"Skipped by robots.txt: {current_url}")
                 continue
             time.sleep(SLEEP_TIME)
             try:
