@@ -44,11 +44,7 @@ def test_extract_forms_relative_action():
     # Only named inputs are collected
     assert set(desc["inputs"]) == {"user", "pass"}
 
-# You can add more tests:
-# - multiple forms on one page
-# - forms with textarea
-# - forms with no inputs
-# - absolute action URLs
+
 
 
 BASE = "https://example.com/base/"
