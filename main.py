@@ -2,7 +2,7 @@ from colorama import Fore, Style, init
 
 import argparse
 import logging
-from scanner import run_scanner
+from scanner.scanner import run_scanner
 init(autoreset=True)
 
 def main():

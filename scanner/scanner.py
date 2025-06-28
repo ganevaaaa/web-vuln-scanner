@@ -2,7 +2,6 @@ import json
 import requests
 from crawler import WebCrawler
 from reporting import record_finding,write_report_json
-import logging
 
 
 def run_scanner(start_url,max_pages,confirm=False):
@@ -76,9 +75,9 @@ def analyze_response(response, field, payload, form, page_url):
 
 
 def load_payloads():
-    with open('payloads/xss.json') as f:
+    with open('../payloads/xss.json') as f:
         xss_payloads = json.load(f)
-    with open('payloads/sqli.json') as f:
+    with open('../payloads/sqli.json') as f:
         sqli_payloads = json.load(f)
     return xss_payloads + sqli_payloads
 
