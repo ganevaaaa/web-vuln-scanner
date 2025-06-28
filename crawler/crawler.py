@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from collections import deque
-from urllib.parse import  urlparse
+from urllib.parse import urlparse
 from urllib.robotparser import RobotFileParser
 from parser import extract_links, extract_forms
 import time
@@ -9,7 +9,6 @@ from colorama import Fore, Style, init
 import logging
 
 logging.basicConfig(level=logging.INFO)
-SLEEP_TIME = 1
 
 init(autoreset=True)
 
@@ -24,6 +23,8 @@ class WebCrawler:
          - Pauses between requests to avoid overloading servers
          - Stops after visiting MAX_PAGES pages
      """
+    SLEEP_TIME = 1
+
     def __init__(self, start_url):
         """
             Initialize the crawler.
@@ -35,10 +36,9 @@ class WebCrawler:
         self.queue = deque([start_url])
         self.page_forms = []
 
-
         # ——————————————
         # robots.txt support
-        #Website owners list which parts of the site they don’t want crawled-voluntary
+        # Website owners list which parts of the site they don’t want crawled-voluntary
         # convention to be a “good citizen” on the web :)
         domain = "{uri.scheme}://{uri.netloc}".format(uri=urlparse(start_url))
         self.rp = RobotFileParser()
@@ -73,41 +73,95 @@ class WebCrawler:
             * Enqueues unseen links
         """
 
-
-
         self.queue = deque([url])
 
-
+        self.queue = deque([url])
         while self.queue and len(self.visited) < max_pages:
             current_url = self.queue.popleft()
-            logging.info(f"{Fore.GREEN}Visiting: {current_url}{Style.RESET_ALL}")
-            # robots.txt check
-            if not self.rp.can_fetch(self.user_agent, current_url):
-                logging.warning(f"{Fore.YELLOW}Skipped by robots.txt: {current_url}{Style.RESET_ALL}")
+            if not self.should_visit(current_url, confirm):
                 continue
-            time.sleep(SLEEP_TIME)
-            try:
-                # fetch with custom User-Agent
-                response = requests.get(current_url,headers={"User-Agent": self.user_agent})
-                self.visited.add(current_url)
-
-                html = response.text
-                soup = BeautifulSoup(html, "html.parser")
-                links = extract_links(soup, current_url)
-                self.is_visited(links)
-                forms = extract_forms(soup, current_url)
-                if forms:
-                    self.page_forms.append({
-                        "page_url": current_url,
-                        "forms": forms
-                    })
-            except requests.RequestException as e:
-                print(f"{Fore.RED}Failed to fetch {current_url}: {e}{Style.RESET_ALL}")
+            html = self.fetch_page(current_url)
+            if not html:
                 continue
+            self.extract_links_and_forms(html, current_url)
 
 
 
-    def is_visited(self,links):
+
+
+
+    def should_visit(self, url, confirm: bool) -> bool:
+        """
+           Determine whether the given URL should be visited.
+
+           Args:
+               url (str): The URL to evaluate.
+               confirm (bool): Whether to override robots.txt restrictions.
+
+           Returns:
+               bool: True if the URL should be visited; False otherwise.
+
+           Behavior:
+               - Skips URLs that have already been visited.
+               - Skips URLs disallowed by robots.txt unless confirm=True.
+           """
+        if url in self.visited:
+            return False
+        if not confirm and not self.rp.can_fetch(self.user_agent, url):
+            logging.warning(f"{Fore.YELLOW}Skipped by robots.txt: {url}{Style.RESET_ALL}")
+            return False
+        return True
+
+    def fetch_page(self, url):
+        """
+        Send a GET request to the specified URL and return the HTML content.
+
+        Args:
+            url (str): The URL to fetch.
+
+        Returns:
+            str or None: The HTML content of the page, or None on failure.
+
+        Behavior:
+            - Logs the request.
+            - Waits SLEEP_TIME seconds before sending the request.
+            - Uses a custom User-Agent.
+            - Marks the URL as visited if the request is successful.
+        """
+        logging.info(f"{Fore.GREEN}Visiting: {url}{Style.RESET_ALL}")
+        time.sleep(self.SLEEP_TIME)
+        try:
+            response = requests.get(url, headers={"User-Agent": self.user_agent})
+            self.visited.add(url)
+            return response.text
+        except requests.RequestException as e:
+            logging.error(f"{Fore.RED}Failed to fetch {url}: {e}{Style.RESET_ALL}")
+            return None
+
+    def extract_links_and_forms(self, html, current_url):
+        """
+            Parse HTML content and extract all internal links and forms.
+
+            Args:
+                html (str): The HTML content of the current page.
+                current_url (str): The URL of the page being processed.
+
+            Behavior:
+                - Extracts <a> links and adds new ones to the crawl queue.
+                - Extracts <form> tags and stores their metadata in page_forms.
+            """
+        soup = BeautifulSoup(html, "html.parser")
+        links = extract_links(soup, current_url)
+        self.enqueue_unvisited_links(links)
+
+        forms = extract_forms(soup, current_url)
+        if forms:
+            self.page_forms.append({
+                "page_url": current_url,
+                "forms": forms
+            })
+
+    def enqueue_unvisited_links(self, links):
         """
         Add unseen links to the visited set and the crawl queue.
 
@@ -117,7 +171,5 @@ class WebCrawler:
         """
         for link in links:
             if link not in self.visited:
-                #self.visited.add(link)
+                # self.visited.add(link)
                 self.queue.append(link)
-
-
