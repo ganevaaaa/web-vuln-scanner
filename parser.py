@@ -14,34 +14,27 @@ def extract_links(soup, base_url):
         base_url: The URL used to resolve relative links.
 
     Returns:
-        A list of fully-qualified URLs on the same domain as base_url.
+        A list of fully-qualified, same-domain URLs.
     """
-    links = []
+    links = set()
     base_netloc = urlparse(base_url).netloc
-    base_path = base_url.rstrip('/')
-    for tag in soup.find_all('a'):
+
+    for tag in soup.find_all(["a", "area", "link"]):
         raw_href = tag.get("href")
         if not raw_href:
             continue
 
-        # Strip off any #fragment
         href, _ = urldefrag(raw_href)
 
-        # Skip empty and unsupported schemes
-        if not href or href.lower().startswith("javascript:") or href.lower().startswith("mailto:"):
+        if not href or href.lower().startswith(("javascript:", "mailto:")):
             continue
 
-        # Resolve URL
-        if href.startswith('/'):
-            full_url = base_path + href
-        else:
-            full_url = urljoin(base_url, href)
+        full_url = urljoin(base_url, href)
 
-        # Keep only internal links (same domain)
         if urlparse(full_url).netloc == base_netloc:
-            links.append(full_url)
+            links.add(full_url)
 
-    return links
+    return list(links)
 
 
 # just like <a href> , a form’s action attribute and <iframe src> point to another URL we  need to know about
