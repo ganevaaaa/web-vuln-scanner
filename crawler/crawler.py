@@ -24,6 +24,8 @@ class WebCrawler:
          - Stops after visiting MAX_PAGES pages
      """
     SLEEP_TIME = 1
+    USER_AGENT = "TheBestCrawler/1.0"
+
 
     def __init__(self, start_url):
         """
@@ -44,7 +46,6 @@ class WebCrawler:
         self.rp = RobotFileParser()
         self.rp.set_url(domain + "/robots.txt")
         self.rp.read()
-        self.user_agent = "MyCrawler/1.0"  # can be anything you choose
         # ——————————————
 
     def start_crawl(self):
@@ -73,7 +74,6 @@ class WebCrawler:
             * Enqueues unseen links
         """
 
-        self.queue = deque([url])
 
         self.queue = deque([url])
         while self.queue and len(self.visited) < max_pages:
@@ -107,7 +107,7 @@ class WebCrawler:
            """
         if url in self.visited:
             return False
-        if not confirm and not self.rp.can_fetch(self.user_agent, url):
+        if not confirm and not self.rp.can_fetch(self.USER_AGENT, url):
             logging.warning(f"{Fore.YELLOW}Skipped by robots.txt: {url}{Style.RESET_ALL}")
             return False
         return True
@@ -131,7 +131,7 @@ class WebCrawler:
         logging.info(f"{Fore.GREEN}Visiting: {url}{Style.RESET_ALL}")
         time.sleep(self.SLEEP_TIME)
         try:
-            response = requests.get(url, headers={"User-Agent": self.user_agent})
+            response = requests.get(url, headers={"User-Agent": self.USER_AGENT})
             self.visited.add(url)
             return response.text
         except requests.RequestException as e:
@@ -171,5 +171,5 @@ class WebCrawler:
         """
         for link in links:
             if link not in self.visited:
-                # self.visited.add(link)
+                self.visited.add(link)
                 self.queue.append(link)
