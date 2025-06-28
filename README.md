@@ -30,13 +30,11 @@ A lightweight Python-based tool that crawls websites and detects common web vuln
 
 - Command Injection detection
 
-- HTML report output
 
 - HTML Report Generation
 
 - Scan Summary
 - Authenticated Scanning
-- Command Injection
 
 - File Inclusion
 
