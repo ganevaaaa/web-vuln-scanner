@@ -89,7 +89,7 @@ class WebCrawler:
             try:
                 # fetch with custom User-Agent
                 response = requests.get(current_url,headers={"User-Agent": self.user_agent})
-                self.visited.add(url)
+                self.visited.add(current_url)
 
                 html = response.text
                 soup = BeautifulSoup(html, "html.parser")
