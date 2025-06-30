@@ -50,6 +50,9 @@ def extract_forms(soup, current_url):
       """
     form_tags = soup.find_all("form")
     forms = []
+    has_csrf_token = False
+    token_keywords = ["csrf", "token", "auth", "verify", "nonce"]
+
     for form in form_tags:
         action = form.get("action")
         if not action:
@@ -66,15 +69,24 @@ def extract_forms(soup, current_url):
             # By extracting each control’s name, the scanner can place payloads
             # under the exact keys the server looks for—otherwise your tests will silently fail.
         inputs = []
-        for control in form.find_all(("input", "textarea")):
+        for control in form.find_all(("input", "textarea","select", "button")):
             name = control.get("name")
+            input_type = control.get("type", "text").lower()
+
             if name:
-                inputs.append(name)
+                inputs.append({
+                    "name": name,
+                    "type": input_type
+                })
+                if input_type == "hidden" and any(k in name.lower() for k in token_keywords):
+                    has_csrf_token = True
         forms.append({
         "page_url": current_url,
         "action_url": endpoint,
         "method": method,
-        "inputs": inputs
+        "inputs": inputs,
+            "has_csrf_token": has_csrf_token
+
         })
 
     return forms
