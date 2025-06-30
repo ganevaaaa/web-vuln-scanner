@@ -2,7 +2,7 @@ import json
 import requests
 from crawler import WebCrawler
 from reporting import record_finding,write_report_json
-
+import os
 
 def run_scanner(start_url,max_pages,confirm=False):
     crawler = WebCrawler(start_url)
@@ -117,11 +117,18 @@ def analyze_response(response, field, payload, form, page_url):
         record_finding(page_url, form["action_url"], field, payload, "sqli", "SQL error string detected")
 
 
+
+
 def load_payloads():
-    with open('../payloads/xss.json') as f:
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    payload_path = os.path.join(base_dir, "..", "payloads")
+
+    with open(os.path.join(payload_path, "xss.json")) as f:
         xss_payloads = json.load(f)
-    with open('../payloads/sqli.json') as f:
+    with open(os.path.join(payload_path, "sqli.json")) as f:
         sqli_payloads = json.load(f)
+
     return xss_payloads + sqli_payloads
+
 
 
