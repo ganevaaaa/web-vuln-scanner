@@ -15,7 +15,6 @@ If you discover a security vulnerability, please do **not** create a public issu
 Instead, report it securely via email:
 
 📧 **ganevagabriela@proton.me**
-(Replace this with your actual contact email)
 
 Include:
 
