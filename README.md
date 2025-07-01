@@ -14,16 +14,15 @@ A lightweight Python-based tool that crawls websites and detects common web vuln
 
 
 ## 🚀 Features
-- Website crawler using Breadth-First Search (BFS)
+- 🌐 Website crawler using Breadth-First Search (BFS)
+- 📝 Form detection & parsing (action, method, inputs)
+- 💉 XSS & SQLi payload injection (GET & POST)
+- ⚙️ CLI argument parsing
+- 🔐 CSRF token detection (NEW!)
+- 🧪 Reflection & error-based response analysis
+- 📤 JSON report generation
 
-- Form detection & parsing (action, method, inputs)
 
-- XSS & SQLi payload injection (GET & POST)
-
-- Reflection & error-based response analysis
-
-- JSON report generation
-- CLI argument parsing
 
 
 🚧 In development:
@@ -79,7 +78,7 @@ python main.py --url http://testphp.vulnweb.com --max-pages 20 --i-understand
 ## ⚙️ CLI Arguments
 | Argument         | Description                                     |
 | ---------------- | ----------------------------------------------- |
-| `--url`          | **(required)** The starting URL to scan         |
+| `--url`          | The starting URL to scan         |
 | `--max-pages`    | Maximum number of pages to crawl   |
 | `--i-understand` | Confirms you have permission for non-demo sites |
 
