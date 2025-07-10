@@ -48,12 +48,16 @@ class WebCrawler:
         self.rp.read()
         # ——————————————
 
-    def start_crawl(self):
+    def start_crawl(self, max_pages, confirm: bool = False):
         """
         Clear any previous state and begin crawling from the start_url.
+
+        Args:
+            max_pages (int): Maximum number of pages to visit.
+            confirm (bool): Override robots.txt restrictions.
         """
         self.visited.clear()
-        self.crawl(self.start_url)
+        self.crawl(self.start_url, max_pages, confirm=confirm)
 
     def crawl(self, url: str, max_pages: int, confirm: bool = False) -> None:
         """
