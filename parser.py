@@ -1,10 +1,6 @@
 from urllib.parse import urljoin, urlparse, urldefrag
 
-# Because raw HTML is just one big string->use BeautifulSoup
 
-# soup gives you the tag, but base_url gives you the full path when needed.
-# The browser would know to open the website as rel path , but we need the whole path , thus we
-# reconstruct it using the base url
 def extract_links(soup, base_url):
     """
     Extract and normalize all internal <a href="..."> links from a parsed page.
@@ -17,14 +13,15 @@ def extract_links(soup, base_url):
         A list of fully-qualified, same-domain URLs.
     """
     links = set()
+    #extract the domain of the base address - will be used to stay on internal sites only
     base_netloc = urlparse(base_url).netloc
 
-    for tag in soup.find_all(["a", "area", "link"]):
+    for tag in soup.find_all(["a", "area", "link"]): # all tags in the HTML that may contain a hyperlink
         raw_href = tag.get("href")
-        if not raw_href:
+        if not raw_href: #checks if links is broken or missing
             continue
 
-        href, _ = urldefrag(raw_href)
+        href, _ = urldefrag(raw_href) #gets the href ; everything before the # ; we don't need the rest for the crawler
 
         if not href or href.lower().startswith(("javascript:", "mailto:")):
             continue
@@ -59,17 +56,17 @@ def extract_forms(soup, current_url):
             # When a form has no action specified, browsers default to re-submitting to the same page you’re on.
             endpoint = current_url
         else:
-            # Resolve paths->: Servers expect absolute URLs.
+            # Resolve paths->: Servers expect absolute URLs
             endpoint = urljoin(current_url, action)
-            # endpoint holds the exact URL where we  must send the test requests
 
         # capturing the form’s method ensures the implemented scanner sends payloads exactly as a browser would
+
         method = form.get("method", "get").lower()
 
-            # By extracting each control’s name, the scanner can place payloads
-            # under the exact keys the server looks for—otherwise your tests will silently fail.
+
         inputs = []
         for control in form.find_all(("input", "textarea","select", "button")):
+            #looping through input fields ; needed for teh payload 
             name = control.get("name")
             input_type = control.get("type", "text").lower()
 

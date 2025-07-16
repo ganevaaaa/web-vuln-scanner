@@ -48,12 +48,12 @@ class WebCrawler:
         self.rp.read()
         # ——————————————
 
-    def start_crawl(self):
+    def start_crawl(self, max_pages, confirm: bool) -> None:
         """
         Clear any previous state and begin crawling from the start_url.
         """
         self.visited.clear()
-        self.crawl(self.start_url)
+        self.crawl(self.start_url,max_pages, confirm)
 
     def crawl(self, url: str, max_pages: int, confirm: bool = False) -> None:
         """
@@ -72,6 +72,7 @@ class WebCrawler:
             * Sends GET with custom User-Agent
             * Parses HTML for links
             * Enqueues unseen links
+            :param confirm:
         """
 
 
