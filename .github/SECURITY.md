@@ -1,12 +1,5 @@
 # Security Policy
-## Supported Versions
 
-We regularly update the latest version of this project. Please ensure you are using the most recent release.
-
-| Version | Supported |
-|---------|-----------|
-| Latest  | ✅         |
-| Older   | ❌         |
 
 ## Reporting a Vulnerability
 
