@@ -48,20 +48,19 @@ class WebCrawler:
         self.rp.read()
         # ——————————————
 
-    def start_crawl(self):
+    def start_crawl(self, max_pages, confirm):
         """
         Clear any previous state and begin crawling from the start_url.
         """
         self.visited.clear()
-        self.crawl(self.start_url)
+        self.crawl(self.start_url, max_pages, confirm)
 
     def crawl(self, url: str, max_pages: int, confirm: bool = False) -> None:
         """
           Perform a BFS crawl starting from the given URL.
-
-          Args:
-             url: The URL at which to start (or restart) the crawl.
-
+           :param url: The URL at which to start (or restart) the crawl.
+            :param confirm:
+            :param max_pages: max page sto crawl
           Behavior:
            - Resets the queue to begin at `url`
            - Marks `url` as visited
@@ -72,6 +71,7 @@ class WebCrawler:
             * Sends GET with custom User-Agent
             * Parses HTML for links
             * Enqueues unseen links
+
         """
 
 
