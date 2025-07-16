@@ -5,6 +5,7 @@ import os
 import logging
 import requests
 
+
 def run_scanner(start_url, max_pages, confirm=False):
     """
        Run the full web vulnerability scanner.
@@ -58,9 +59,6 @@ def run_scanner(start_url, max_pages, confirm=False):
                     )
 
     write_report_json()
-
-
-
 
 
 def inject_form(form, payload):
@@ -125,7 +123,7 @@ def inject_form(form, payload):
 
         try:
             # Sending the requests with the corresponding methods
-            # Sends data with the payload
+            # Sends data with the payload for each input field, unless its CSRF
             if method == "post":
                 response = requests.post(action_url, data=data, headers=headers)
             else:
@@ -134,7 +132,7 @@ def inject_form(form, payload):
             logging.info(f"Injected into '{field_name}' on {action_url} → Status {response.status_code}")
 
             results.append({
-                "url": action_url,
+                "url": action_url,  # where the form was submitted
                 "method": method,
                 "field": field_name,
                 "payload": payload,
@@ -147,14 +145,41 @@ def inject_form(form, payload):
 
     return results
 
-
+# basically, after sending the payload, the attack may be reflected in the server response,
+# and I am  looking for either the payload (if it's XSS) or an error message (if it's SQLi).
 def analyze_response(response, field, payload, form, page_url):
+    """
+        Analyze the server's response to determine if the injected payload triggered a vulnerability.
+
+        This function checks for two types of vulnerabilities:
+        1. (XSS): If the payload is reflected back in the HTML response,
+           it is likely the site is vulnerable to XSS.
+        2. SQL Injection: If the response contains typical SQL error messages, this may indicate
+           an injectable SQL query.
+
+        If a vulnerability is detected, a message is printed to the console and the issue is recorded
+        for reporting.
+
+        Args:
+            response (requests.Response): The HTTP response returned after payload injection.
+            field (str): The name of the form input field that received the payload.
+            payload (str): The malicious payload that was sent.
+            form (dict): The form metadata (includes action_url and method).
+            page_url (str): The URL of the page where the form was found.
+
+        Behavior:
+            - Detects and reports XSS if payload is reflected in the response HTML.
+            - Detects and reports SQL injection if known SQL error strings appear in the response.
+            - Uses `record_finding()` to log all confirmed issues.
+        """
+
     text = response.text.lower()
 
     if payload.lower() in text:
         print(f"[XSS] Payload reflected in response → field: {field} | payload: {payload}")
         record_finding(page_url, form["action_url"], field, payload, "xss", "payload reflected in HTML")
 
+    # These are common error messages from different SQL servers (MySQL, MSSQL, etc.)
     sql_errors = [
         "you have an error in your sql syntax",
         "warning: mysql",
@@ -167,6 +192,22 @@ def analyze_response(response, field, payload, form, page_url):
 
 
 def load_payloads():
+    """
+     Load XSS and SQL injection payloads from external JSON files.
+
+     This function locates the 'payloads' directory (one level above the current script)
+     and loads payloads from two JSON files:
+         - xss.json: contains a list of XSS payload strings
+         - sqli.json: contains a list of SQL injection payload strings
+
+     It combines both payload lists into a single list and returns it.
+
+     Returns:
+         List[str]: A list of strings, each representing an attack payload (XSS or SQLi).
+    Raises:
+        FileNotFoundError: If either payload file is missing.
+        json.JSONDecodeError: If a file is not valid JSON.
+    """
     base_dir = os.path.dirname(os.path.abspath(__file__))
     payload_path = os.path.join(base_dir, "..", "payloads")
 
