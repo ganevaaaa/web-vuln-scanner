@@ -42,11 +42,12 @@ class WebCrawler:
         # robots.txt support
         # Website owners list which parts of the site they don’t want crawled-voluntary
         # convention to be a “good citizen” on the web :)
+        # ——————————————
         domain = "{uri.scheme}://{uri.netloc}".format(uri=urlparse(start_url))
         self.rp = RobotFileParser()
         self.rp.set_url(domain + "/robots.txt")
         self.rp.read()
-        # ——————————————
+
 
     def start_crawl(self, max_pages, confirm):
         """
